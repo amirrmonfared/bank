@@ -1,0 +1,25 @@
+postgres: 
+	docker run --name postgres14 -p 8081:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:14-alpine
+
+createdb:
+	docker exec -it postgres14 createdb --username=root --owner=root bank
+
+dropdb:
+	docker exec -it postgres14 dropdb --username=root bank
+
+root:
+	docker exec -it postgres14 /bin/sh
+
+psql:
+	docker exec -it postgres14 psql -U root
+
+migrateup: 
+	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose down
+
+sqlc:
+	docker run --rm -v C:\Users\amir\.vscode\bank:/src -w /src kjconroy/sqlc generate
+
+.PHONY: createdb postgres dropdb root psql migrateup migratedown sqlc
