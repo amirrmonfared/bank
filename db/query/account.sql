@@ -24,4 +24,4 @@ WHERE id = $1;
 
 -- name: DeleteAccount :exec
 DELETE FROM accounts
-WHERE id = $1;
+WHERE id = $1;  
