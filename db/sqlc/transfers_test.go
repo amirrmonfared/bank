@@ -61,14 +61,14 @@ func TestListTransfer(t *testing.T) {
 		createRandomTransfer(t, account2, account1)
 	}
 
-	arg := ListTransferParams{
-		//FromAccountID: account1.ID,
-		//ToAccountID:   account1.ID,
+	arg := ListTransfersParams{
+		FromAccountID: account1.ID,
+		ToAccountID:   account1.ID,
 		Limit:         5,
 		Offset:        5,
 	}
 
-	transfers, err := testQueris.ListTransfer(context.Background(), arg)
+	transfers, err := testQueris.ListTransfers(context.Background(), arg)
 	require.NoError(t, err)
 	require.Len(t, transfers, 5)
 
