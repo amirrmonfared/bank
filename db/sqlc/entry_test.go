@@ -53,7 +53,7 @@ func TestListEntries(t *testing.T) {
 	}
 
 	arg := ListEntryParams{
-		//AccountID: account.ID,
+		AccountID: account.ID,
 		Limit:     5,
 		Offset:    5,
 	}
@@ -64,6 +64,6 @@ func TestListEntries(t *testing.T) {
 
 	for _, entry := range entries {
 		require.NotEmpty(t, entry)
-		//require.Equal(t,arg.AccountID, entry.AccountID)
+		require.Equal(t,arg.AccountID, entry.AccountID)
 	}
 }

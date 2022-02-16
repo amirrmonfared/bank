@@ -12,9 +12,10 @@ WHERE id = $1 LIMIT 1;
 
 -- name: ListEntry :many
 SELECT * FROM entries
+WHERE account_id = $1
 ORDER BY id
-LIMIT $1
-OFFSET $2;
+LIMIT $2
+OFFSET $3;
 
 -- name: UpdateEntry :exec
 UPDATE entries 
