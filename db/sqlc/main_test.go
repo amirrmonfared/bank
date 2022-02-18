@@ -14,7 +14,7 @@ const (
 	dbSource = "postgresql://root:password@localhost:8081/bank?sslmode=disable"
 )
 
-var testQueris *Queries
+var testQueries *Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
@@ -25,7 +25,7 @@ func TestMain(m *testing.M) {
 		log.Fatal("cannot connect to db:", err)
 	}
 
-	testQueris = New(testDB)
+	testQueries = New(testDB)
 
 	os.Exit(m.Run())
 }
