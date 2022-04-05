@@ -1,5 +1,5 @@
 postgres: 
-	docker run --name postgres14 -p 8081:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:14-alpine
+	docker run --name postgres14 --network bank-network -p 8081:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:14-alpine
 
 createdb:
 	docker exec -it postgres14 createdb --username=root --owner=root bank
@@ -37,4 +37,8 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/amirrmonfared/bank/db/sqlc Store
 
-.PHONY: createdb postgres dropdb root psql migrateup migratedown sqlc test server mock migratedown1 migrateup1
+dockerrun:
+
+	docker run --name bank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:password@postgres14:5432/bank?sslmode=disable" bank:latest
+
+.PHONY: createdb postgres dropdb root psql migrateup migratedown sqlc test server mock migratedown1 migrateup1 dockerrun
