@@ -1,5 +1,5 @@
 postgres: 
-	docker run --name postgres14 --network bank-network -p 8081:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:14-alpine
+	docker run --name postgres14 --network bank-network -p 5433:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine
 
 createdb:
 	docker exec -it postgres14 createdb --username=root --owner=root bank
@@ -14,16 +14,16 @@ psql:
 	docker exec -it postgres14 psql -U root -d bank
 
 migrateup: 
-	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose up
 
 migrateup1: 
-	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose up 1
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose down
 
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:password@localhost:8081/bank?sslmode=disable" -verbose down 1
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose down 1
 
 sqlc:
 	docker run --rm -v C:\Users\amir\.vscode\courses\bank:/src -w /src kjconroy/sqlc generate
