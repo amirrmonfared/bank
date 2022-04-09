@@ -9,9 +9,9 @@ import (
 
 const createTransfer = `-- name: CreateTransfer :one
 INSERT INTO transfers (
-    from_account_id,
-    to_account_id,
-    amount
+  from_account_id,
+  to_account_id,
+  amount
 ) VALUES (
   $1, $2, $3
 ) RETURNING id, from_account_id, to_account_id, amount, created_at
@@ -34,16 +34,6 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 		&i.CreatedAt,
 	)
 	return i, err
-}
-
-const deleteTransfer = `-- name: DeleteTransfer :exec
-DELETE FROM transfers
-WHERE id = $1
-`
-
-func (q *Queries) DeleteTransfer(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteTransfer, id)
-	return err
 }
 
 const getTransfer = `-- name: GetTransfer :one
@@ -113,20 +103,4 @@ func (q *Queries) ListTransfers(ctx context.Context, arg ListTransfersParams) ([
 		return nil, err
 	}
 	return items, nil
-}
-
-const updateTransfer = `-- name: UpdateTransfer :exec
-UPDATE transfers 
-SET amount = $2
-WHERE id = $1
-`
-
-type UpdateTransferParams struct {
-	ID     int64 `json:"id"`
-	Amount int64 `json:"amount"`
-}
-
-func (q *Queries) UpdateTransfer(ctx context.Context, arg UpdateTransferParams) error {
-	_, err := q.db.ExecContext(ctx, updateTransfer, arg.ID, arg.Amount)
-	return err
 }

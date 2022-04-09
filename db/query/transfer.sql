@@ -1,8 +1,8 @@
 -- name: CreateTransfer :one
 INSERT INTO transfers (
-    from_account_id,
-    to_account_id,
-    amount
+  from_account_id,
+  to_account_id,
+  amount
 ) VALUES (
   $1, $2, $3
 ) RETURNING *;
@@ -19,12 +19,3 @@ WHERE
 ORDER BY id
 LIMIT $3
 OFFSET $4;
-
--- name: UpdateTransfer :exec
-UPDATE transfers 
-SET amount = $2
-WHERE id = $1;
-
--- name: DeleteTransfer :exec
-DELETE FROM transfers
-WHERE id = $1; 

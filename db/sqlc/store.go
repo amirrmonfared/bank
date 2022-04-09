@@ -6,12 +6,13 @@ import (
 	"fmt"
 )
 
+// Store defines all functions to execute db queries and transactions
 type Store interface {
 	Querier
 	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
 }
 
-// SQLStore provides all functions to execute db queries and transaction
+// SQLStore provides all functions to execute SQL queries and transactions
 type SQLStore struct {
 	db *sql.DB
 	*Queries
@@ -105,7 +106,14 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 	return result, err
 }
 
-func addMoney(ctx context.Context, q *Queries,accountID1 int64, amount1 int64, accountID2 int64, amount2 int64,) (account1 Account, account2 Account, err error) {
+func addMoney(
+	ctx context.Context,
+	q *Queries,
+	accountID1 int64,
+	amount1 int64,
+	accountID2 int64,
+	amount2 int64,
+) (account1 Account, account2 Account, err error) {
 	account1, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
 		ID:     accountID1,
 		Amount: amount1,

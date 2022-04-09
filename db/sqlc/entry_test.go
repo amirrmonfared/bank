@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/amirrmonfared/bank/util"
 	"github.com/stretchr/testify/require"
+	"github.com/techschool/simplebank/util"
 )
 
 func createRandomEntry(t *testing.T, account Account) Entry {
@@ -52,13 +52,13 @@ func TestListEntries(t *testing.T) {
 		createRandomEntry(t, account)
 	}
 
-	arg := ListEntryParams{
+	arg := ListEntriesParams{
 		AccountID: account.ID,
 		Limit:     5,
 		Offset:    5,
 	}
 
-	entries, err := testQueries.ListEntry(context.Background(), arg)
+	entries, err := testQueries.ListEntries(context.Background(), arg)
 	require.NoError(t, err)
 	require.Len(t, entries, 5)
 
