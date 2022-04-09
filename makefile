@@ -13,6 +13,9 @@ root:
 psql:
 	docker exec -it postgres14 psql -U root -d bank
 
+migrateupsrv:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose down
+
 migrateup: 
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose up
 
