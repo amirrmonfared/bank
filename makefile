@@ -13,9 +13,6 @@ root:
 psql:
 	docker exec -it postgres14 psql -U root -d bank
 
-migrateupsrv: 
-	migrate -path db/migration -database "postgresql://root:A20m01irBaharph79b!@bank.ct386ye9vqsz.eu-west-1.rds.amazonaws.com:5432/bank" -verbose up
-
 migrateup: 
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/bank?sslmode=disable" -verbose up
 
@@ -43,4 +40,4 @@ mock:
 dockerrun:
 	docker run --name bank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:password@postgres14:5432/bank?sslmode=disable" bank:latest
 
-.PHONY: createdb postgres dropdb root psql migrateup migratedown sqlc test server mock migratedown1 migrateup1 dockerrun migrateupsrv
+.PHONY: createdb postgres dropdb root psql migrateup migratedown sqlc test server mock migratedown1 migrateup1 dockerrun
